@@ -5,6 +5,7 @@ Repositório para guardar o desafio de clean architecture do curso GO Expert da 
 ## Dependências
 - Ter o `docker` e o `docker-compose` instalado na máquina
 - Ter um motor para rodar `Makefile`s na máquina
+- Ter o [golang migrate](https://github.com/golang-migrate/migrate) instalado na máquina
 
 ## Execução
 
@@ -53,7 +54,10 @@ O comando tem alguns parâmetros que podem ser utilizados para configurar qual b
 - DB_PORT -> (default: `3306`)
 - DB_USER -> (default: `root`)
 - DB_PASS -> (default: `root`)
+- DB_NAME -> (default: `fullcycle`)
 - MIGRATION_UP_FILE -> (default: `./cmd/migrations/migration_up.sql`)
+
+> Caso a migração falhe pois o banco especificado na variável `DB_NAME` não foi automaticamente criado pelo Docker, tente criá-lo manualmente e executar a migration novamente!
 
 ### Rodando o projeto
 Por fim, após rodar e configurar as dependências, basta executar

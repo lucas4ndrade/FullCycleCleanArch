@@ -4,17 +4,14 @@ run-infra:
 run:
 	go run ./cmd/ordersystem/main.go ./cmd/ordersystem/wire_gen.go 
 
-# Definir valores padrão
 DB_HOST ?= localhost
 DB_PORT ?= 3306
 DB_USER ?= root
 DB_PASS ?= root
-MIGRATION_UP_FILE ?= ./cmd/migrations/migration_up.sql
-MIGRATION_DOWN_FILE ?= ./cmd/migrations/migration_down.sql
+DB_NAME ?= fullcycle
 
-# Comando migration-up
 migration-up:
-	@mysql -h $(DB_HOST) -P $(DB_PORT) -u $(DB_USER) -p$(DB_PASS) < $(MIGRATION_UP_FILE)
+	migrate -path=cmd/migrations -database "mysql://$(DB_USER):$(DB_PASS)@tcp($(DB_HOST):$(DB_PORT))/$(DB_NAME)" -verbose up
 
 migration-down:
-	@mysql -h $(DB_HOST) -P $(DB_PORT) -u $(DB_USER) -p$(DB_PASS) < $(MIGRATION_DOWN_FILE)
+	migrate -path=cmd/migrations -database "mysql://$(DB_USER):$(DB_PASS)@tcp($(DB_HOST):$(DB_PORT))/$(DB_NAME)" -verbose down
