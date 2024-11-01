@@ -58,14 +58,14 @@ func (c *CreateOrderUseCase) Execute(input CreateOrderInputDTO) (output OrderOut
 		return
 	}
 
-	dto := OrderOutputDTO{
+	output = OrderOutputDTO{
 		ID:         order.ID,
 		Price:      order.Price,
 		Tax:        order.Tax,
 		FinalPrice: order.Price + order.Tax,
 	}
 
-	c.OrderCreated.SetPayload(dto)
+	c.OrderCreated.SetPayload(output)
 	dispatchErr := c.EventDispatcher.Dispatch(c.OrderCreated)
 	if dispatchErr != nil {
 		fmt.Printf("[ERROR] Failed to dispatch order %s event after order creation, %v", order.ID, err)
